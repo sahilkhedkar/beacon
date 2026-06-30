@@ -43,12 +43,17 @@ app.post("/chat", async (req, res) => {
 
 
   for await ( const textPart of result.textStream) {
-    res.end(textPart);
+    res.write(textPart);
   }
 
+  res.write("----------SOURCES-----------\n")
+
   // also stream back the sources and the follow up questions
+    webSearchResults.forEach(result => res.write(JSON.stringify(result)))
 
   // close the event stream
+
+  res.end();
  
 });
 
