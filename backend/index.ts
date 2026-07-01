@@ -37,7 +37,7 @@ app.post("/chat", async (req, res) => {
     .replace("{{USER_QUERY}}", query);
 
   const result = streamText({
-    model: openai("gpt-4.1"),
+    model: openai("gpt-4o-mini"),
     prompt: prompt,
     system: SYSTEM_PROMPT,
   });
@@ -50,10 +50,12 @@ app.post("/chat", async (req, res) => {
     res.write(textPart);
   }
 
-  res.write("\n----------SOURCES-----------\n")
+  res.write("\n<SOURCES>\n")
 
   // also stream back the sources and the follow up questions
     res.write(JSON.stringify(webSearchResults.map( result => ({ url : result.url }))));
+
+  res.write("\n</SOURCES>\n")
 
   // close the event stream
 
