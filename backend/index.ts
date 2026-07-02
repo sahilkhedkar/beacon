@@ -4,7 +4,6 @@ import { tavily } from "@tavily/core";
 import { streamText } from "ai";
 import { PROMPT_TEMPLATE, SYSTEM_PROMPT } from "./prompts";
 import { z } from "zod";
-import { openai } from "@ai-sdk/openai";
 
 dotenv.config();
 
@@ -37,7 +36,7 @@ app.post("/chat", async (req, res) => {
     .replace("{{USER_QUERY}}", query);
 
   const result = streamText({
-    model: openai("gpt-4o-mini"),
+    model: "openai/gpt-4o-mini",
     prompt: prompt,
     system: SYSTEM_PROMPT,
   });
