@@ -1,10 +1,15 @@
 import express from "express";
+import { tavily } from "@tavily/core";
+
+const client = tavily({
+    apiKey: process.env.TAVILY_API_KEY,
+});
 
 const app = express();
 
 app.use(express.json());
 
-app.post("/chat" , (req , res) => {
+app.post("/chat" , async (req , res) => {
     // step 1 : get query from the user
     const { query } = req.body;
     // step 2 : make sure user has credits/access to hit the endpoint
@@ -12,6 +17,12 @@ app.post("/chat" , (req , res) => {
     // step 3 : check if we have web search indexed for a similar query
 
     // step 4 : web search to gather resources
+
+       const webSearchResponse = await client.search(query , {
+          searchDepth: "advanced"
+       });
+
+       const webSearchResult = webSearchResponse.results
 
     // step 5 : do some context engineering on the prompt + web search responses
 
