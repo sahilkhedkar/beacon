@@ -1,5 +1,7 @@
 import express from "express";
+import { streamText } from "ai";
 import { tavily } from "@tavily/core";
+import { PROMPT_TEMPLATE, SYSTEM_PROMPT } from "./prompts";
 
 const client = tavily({
     apiKey: process.env.TAVILY_API_KEY,
@@ -27,6 +29,16 @@ app.post("/chat" , async (req , res) => {
     // step 5 : do some context engineering on the prompt + web search responses
 
     // step 6 : hit the LLM and stream the response back to the user
+
+    const prompt = PROMPT_TEMPLATE
+       .replace("{{WEB_SEARCH_RESULTS}}" , JSON.stringify(webSearchResult))
+       .replace("{{USER_QUERY}}" , query);
+
+    const result = await streamText({
+        model: "gpt-4o-mini",
+        prompt : prompt,
+        system: SYSTEM_PROMPT,
+    })
 
     // step 7 : also stream back the sources and the follow up questions ( which we can get from another parallel LLM call )
 
