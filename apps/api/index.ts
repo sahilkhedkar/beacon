@@ -3,6 +3,7 @@ import { Output, streamText } from "ai";
 import { tavily } from "@tavily/core";
 import { PROMPT_TEMPLATE, SYSTEM_PROMPT } from "./prompts";
 import {z} from "zod";
+import { prisma } from "@repo/db";
 
 const client = tavily({
     apiKey: process.env.TAVILY_API_KEY,
@@ -11,6 +12,33 @@ const client = tavily({
 const app = express();
 
 app.use(express.json());
+
+const res = await prisma.user.create({
+    data : {
+        email : "sahiil@gmail.com",
+        provider : "GITHUB",
+        name : "Sahil"
+    }
+})
+
+console.log("user created : " , res)
+
+//signup
+
+app.post("/signup" , async (req , res) => {})
+
+//signin
+
+app.post("/signin" , async (req , res) => {})
+
+//get past conversations
+
+app.get("/conversations" , async (req , res) => {})
+
+//past conversations id : get past conversations by id
+
+app.post("/conversation/:conversationId" , async (req , res) => {})
+
 
 app.post("/chat" , async (req , res) => {
     // step 1 : get query from the user
