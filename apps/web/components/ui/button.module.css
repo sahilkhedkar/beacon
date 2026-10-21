@@ -1,0 +1,90 @@
+.button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+.button:focus-visible {
+  outline: 2px solid #f3f4f4;
+  outline-offset: 2px;
+}
+.button:disabled {
+  cursor: not-allowed;
+}
+.default {
+  border: 1px solid #f3f4f4;
+  border-radius: 8px;
+  color: #151617;
+  background: #f3f4f4;
+}
+.default:hover:not(:disabled) {
+  border-color: #fff;
+  background: #fff;
+}
+.secondary {
+  border: 1px solid #303034;
+  border-radius: 8px;
+  color: #ededee;
+  background: #1a1a1d;
+}
+.secondary:hover:not(:disabled) {
+  border-color: #fff;
+  color: #151617;
+  background: #fff;
+}
+.outline {
+  border: 1px solid #303034;
+  border-radius: 8px;
+  color: #d0d0d4;
+  background: transparent;
+}
+.outline:hover:not(:disabled),
+.ghost:hover:not(:disabled) {
+  border-color: #fff;
+  color: #151617;
+  background: #fff;
+}
+.ghost {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #a0a0a8;
+  background: transparent;
+}
+.default,
+.secondary,
+.outline,
+.ghost {
+  padding: 0 12px;
+}
+.default,
+.secondary,
+.outline,
+.ghost,
+.default.small,
+.secondary.small,
+.outline.small,
+.ghost.small {
+  min-height: 36px;
+  font-size: 12px;
+  font-weight: 550;
+}
+.small {
+  min-height: 30px;
+  padding: 0 9px;
+  font-size: 11px;
+}
+.icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 9px;
+}
