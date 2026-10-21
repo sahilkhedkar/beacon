@@ -520,8 +520,11 @@ export default function Home() {
   }
 
   const showWelcome = messages.length === 0 && !loadingConversation;
-  const filteredConversations = conversations.filter((conversation) =>
-    (conversation.title ?? "").toLowerCase().includes(searchTerm.toLowerCase()),
+  const titledConversations = conversations.filter((conversation) =>
+    Boolean(conversation.title?.trim()),
+  );
+  const filteredConversations = titledConversations.filter((conversation) =>
+    conversation.title!.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -568,7 +571,7 @@ export default function Home() {
             RECENTS
           </div>
           <div className={styles.conversationList}>
-            {conversations.length === 0 ? (
+            {titledConversations.length === 0 ? (
               <p className={styles.sidebarEmpty}>
                 Your conversations will appear here.
               </p>
@@ -580,11 +583,12 @@ export default function Home() {
               filteredConversations.map((conversation) => (
                 <Button
                   key={conversation.id}
+                  variant="ghost"
                   className={`${styles.conversationItem} ${activeId === conversation.id ? styles.conversationActive : ""}`}
                   onClick={() => void selectConversation(conversation.id)}
-                  title={conversation.title ?? "New chat"}
+                  title={conversation.title!}
                 >
-                  <span>{conversation.title ?? "New chat"}</span>
+                  <span>{conversation.title}</span>
                 </Button>
               ))
             )}
