@@ -12,7 +12,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Beacon — Research, with clarity",
+  title: "Beacon",
   description: "A thoughtful research assistant powered by live web search.",
 };
 
