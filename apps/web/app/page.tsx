@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { getSupabaseClient } from "../lib/supabase";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
@@ -11,21 +12,20 @@ import {
   ArrowUp,
   ArrowUpRight,
   ChevronDown,
-  CircleHelp,
   ExternalLink,
-  FileText,
-  Github,
   Globe2,
   LogOut,
   Menu,
+  Moon,
   Plus,
   Search,
-  ShieldCheck,
+  Sun,
   X,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import styles from "./page.module.css";
+import natureHero from "../../../packages/ui/nature.png";
 
 const API_URL = (
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3003"
@@ -49,17 +49,6 @@ type Message = {
   pending?: boolean;
 };
 
-function BeaconMark({ className }: { className?: string }) {
-  return (
-    <span
-      className={[styles.beaconMark, className].filter(Boolean).join(" ")}
-      aria-hidden="true"
-    >
-      ℬ
-    </span>
-  );
-}
-
 async function apiFetch(path: string, init: RequestInit = {}) {
   return fetch(`${API_URL}${path}`, {
     ...init,
@@ -73,6 +62,7 @@ async function apiFetch(path: string, init: RequestInit = {}) {
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const router = useRouter();
   const pathname = usePathname();
   const authStarted = useRef(false);
@@ -84,6 +74,7 @@ export default function Home() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
+  const [heroPrompt, setHeroPrompt] = useState("");
   const [sending, setSending] = useState(false);
   const [loadingConversation, setLoadingConversation] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -92,6 +83,53 @@ export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("beacon-theme");
+    if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
+  }, []);
+
+  function toggleTheme() {
+    setTheme((current) => {
+      const next = current === "light" ? "dark" : "light";
+      window.localStorage.setItem("beacon-theme", next);
+      return next;
+    });
+  }
+
+  useEffect(() => {
+    if (user || draft || document.activeElement?.getAttribute("data-hero-input") === "true") return;
+    const prompts = [
+      "How can cities make room for more nature?",
+      "What are the quietest places to see the stars?",
+      "How are forests recovering from wildfires?",
+    ];
+    let promptIndex = 0;
+    let characterIndex = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      if (document.activeElement?.getAttribute("data-hero-input") === "true") {
+        timer = setTimeout(tick, 160);
+        return;
+      }
+      const prompt = prompts[promptIndex];
+      characterIndex += deleting ? -1 : 1;
+      setHeroPrompt(prompt.slice(0, characterIndex));
+      if (characterIndex >= prompt.length) {
+        deleting = true;
+        timer = setTimeout(tick, 1900);
+      } else if (characterIndex <= 0) {
+        deleting = false;
+        promptIndex = (promptIndex + 1) % prompts.length;
+        timer = setTimeout(tick, 450);
+      } else {
+        timer = setTimeout(tick, deleting ? 24 : 48);
+      }
+    };
+    timer = setTimeout(tick, 700);
+    return () => clearTimeout(timer);
+  }, [user, draft]);
 
   const loadConversations = useCallback(async () => {
     const response = await apiFetch("/conversations");
@@ -423,7 +461,10 @@ export default function Home() {
   if (authLoading) {
     return (
       <main className={styles.loadingPage}>
-        <BeaconMark className={styles.loaderMark} />
+        <div className={styles.loadingMessage} role="status" aria-live="polite">
+          <span className={styles.loadingWord}>Beacon</span>
+          <span className={styles.loadingCaption}>Gathering your workspace<span className={styles.loadingEllipsis}>…</span></span>
+        </div>
       </main>
     );
   }
@@ -431,90 +472,24 @@ export default function Home() {
   if (!user) {
     return (
       <main className={styles.authPage}>
-        <header className={styles.landingNav}>
-          <Link className={styles.landingBrand} href="/" aria-label="Beacon home">
-            <BeaconMark className={styles.landingBrandMark} />
-            <span>beacon</span>
-          </Link>
-          <button
-            className={styles.navSignIn}
-            onClick={() => void signInWithGitHub()}
-            type="button"
-          >
-            Sign in <ArrowUpRight size={15} />
-          </button>
-        </header>
-
         <section className={styles.landingHero}>
-          <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>Research, without the noise</p>
-            <h1>
-              Research that
-              <br />
-              <span>shows its work.</span>
-            </h1>
-            <p className={styles.authDescription}>
-              Beacon searches the live web, turns what it finds into a clear,
-              sourced answer, and keeps every conversation and reading trail
-              together so you can pick up where you left off.
-            </p>
-            {apiUnavailable && (
-              <p className={styles.authError} role="status">
-                Beacon’s API isn’t reachable. Start the app with <code>bun dev</code>, then reload.
-              </p>
-            )}
-            {authFailed && (
-              <p className={styles.authError}>
-                {authError ?? "Sign-in didn’t finish. Please try again."}
-              </p>
-            )}
-            <button
-              className={styles.githubButton}
-              onClick={() => void signInWithGitHub()}
-              type="button"
-            >
-              <Github size={17} /> Continue with GitHub
-              <ArrowUpRight size={16} />
-            </button>
-            <div className={styles.authTrust}>
-              <ShieldCheck size={14} /> Private by default. Yours to explore.
+          <div className={styles.heroPhotoFrame}>
+            <Image className={styles.heroPhoto} src={natureHero} alt="A quiet river winding around a green island at sunset" fill priority sizes="100vw" />
+            <div className={styles.heroPhotoShade} />
+            <div className={styles.heroTopline}><Link className={styles.landingBrand} href="/" aria-label="Beacon home"><span>Beacon</span></Link><button className={styles.navSignIn} onClick={() => void signInWithGitHub()} type="button">Sign in <ArrowUpRight size={15} /></button></div>
+            <div className={styles.heroCopy}>
+              <h1>Follow your<br /><em>curiosity.</em></h1>
+              <p className={styles.authDescription}>Live web search, thoughtful answers with sources, and a quiet place for every question that follows.</p>
+              {apiUnavailable && <p className={styles.authError} role="status">Beacon’s API isn’t reachable. Start the app with <code>bun dev</code>, then reload.</p>}
+              {authFailed && <p className={styles.authError}>{authError ?? "Sign-in didn’t finish. Please try again."}</p>}
             </div>
-          </div>
-
-          <div className={styles.previewWrap}>
-            <div className={styles.previewTopline}>
-              <span><span className={styles.previewDot} /> A SAMPLE RESEARCH THREAD</span>
-              <span>01 / 03</span>
+            <div className={styles.heroSearchCard}>
+              <div className={styles.heroInputRow}><Search size={18} /><input data-hero-input="true" value={draft || heroPrompt} onChange={(event) => setDraft(event.target.value)} onFocus={() => setHeroPrompt("")} placeholder="Ask anything, web search it…" aria-label="Ask Beacon anything" /><button aria-label="Continue with GitHub" type="button" onClick={() => void signInWithGitHub()}><ArrowUp size={17} /></button></div>
+              <div className={styles.heroInputMeta}><span><Globe2 size={13} />Live web · Answers with sources</span><button type="button" onClick={() => void signInWithGitHub()}>Start exploring <ArrowUpRight size={14} /></button></div>
             </div>
-            <div className={styles.previewCard}>
-              <div className={styles.previewQuestionIcon}><Search size={16} /></div>
-              <p className={styles.previewLabel}>YOUR QUESTION</p>
-              <h2>How are cities adapting to extreme heat?</h2>
-              <div className={styles.previewRule} />
-              <div className={styles.previewAnswerHead}>
-                <BeaconMark className={styles.previewAnswerMark} />
-                <span>THE SHORT VERSION</span>
-              </div>
-              <p className={styles.previewAnswer}>
-                From cool roofs to shaded streets, cities are combining
-                neighborhood-scale changes with better heat forecasting.
-              </p>
-              <div className={styles.previewSources}>
-                <div className={styles.previewSourcesTitle}><span>FOLLOW THE SOURCES</span><span>02</span></div>
-                <div className={styles.previewSource}><FileText size={14} /><span><strong>Urban heat resilience</strong><small>World Resources Institute</small></span><ArrowUpRight size={13} /></div>
-                <div className={styles.previewSource}><FileText size={14} /><span><strong>Cooling cities at scale</strong><small>Nature Climate Change</small></span><ArrowUpRight size={13} /></div>
-              </div>
-            </div>
-            <p className={styles.previewCaption}>A thoughtful answer, with the reading trail intact.</p>
+            <div className={styles.heroFeatures}><span><i>01</i> Live search</span><span><i>02</i> Sourced answers</span><span><i>03</i> Saved conversations</span></div>
           </div>
         </section>
-
-        <section className={styles.landingFeatures}>
-          <article><span>01</span><h3>See the bigger picture.</h3><p>Beacon looks across the web and brings the most useful perspectives into one clear answer.</p></article>
-          <article><span>02</span><h3>Follow every source.</h3><p>Explore the references behind an answer and decide what deserves a closer read.</p></article>
-          <article><span>03</span><h3>Keep your research.</h3><p>Conversations, sources, and follow-up questions stay together in your private workspace.</p></article>
-        </section>
-        <footer className={styles.landingFooter}><span>beacon</span><span>Make room for curiosity.</span><span>© 2026</span></footer>
       </main>
     );
   }
@@ -528,7 +503,7 @@ export default function Home() {
   );
 
   return (
-    <main className={styles.appShell}>
+    <main className={styles.appShell} data-theme={theme}>
       {sidebarOpen && (
         <Button
           className={styles.mobileScrim}
@@ -541,8 +516,7 @@ export default function Home() {
       >
         <div className={styles.sidebarTop}>
           <Link className={styles.brand} href="/chat" aria-label="Beacon home">
-            <BeaconMark className={styles.brandMarkSmall} />
-            <span>beacon</span>
+            <span>Beacon</span>
           </Link>
           <Button
             className={styles.iconButton}
@@ -595,9 +569,6 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.sidebarBottom}>
-          <a className={styles.helpLink} href="mailto:hello@beacon.app">
-            <CircleHelp size={15} /> Help & feedback
-          </a>
           <div className={styles.userMenuWrap}>
             <Button
               className={styles.userButton}
@@ -636,8 +607,6 @@ export default function Home() {
             <Menu size={19} />
           </Button>
           <div className={styles.breadcrumb}>
-            <span>Workspace</span>
-            <span className={styles.breadcrumbDivider}>/</span>
             <strong>
               {activeId
                 ? (conversations.find((item) => item.id === activeId)?.title ??
@@ -646,14 +615,14 @@ export default function Home() {
             </strong>
           </div>
           <div className={styles.topbarRight}>
-            <span className={styles.onlineDot} /> <span>Private workspace</span>
+            <button className={styles.themeToggle} type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`} title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}>{theme === "light" ? <Moon size={16} /> : <Sun size={16} />}</button>
           </div>
         </header>
 
         <div className={styles.contentArea} ref={scrollRef}>
           {showWelcome ? (
             <section className={styles.welcome}>
-              <h1>Hello, {user.name.trim().split(/\s+/)[0] || "there"}.</h1>
+              <h1 className={styles.rainbowGreeting}>Hello, {user.name.trim().split(/\s+/)[0] || "there"}.</h1>
             </section>
           ) : (
             <section className={styles.thread}>
@@ -672,7 +641,7 @@ export default function Home() {
                   ) : (
                     <>
                       <div className={styles.assistantIdentity}>
-                        <BeaconMark className={styles.assistantMark} />
+                        <span className={styles.assistantIdentityDot} />
                         <span>Beacon</span>
                         <span className={styles.answerLabel}>ANSWER</span>
                       </div>
