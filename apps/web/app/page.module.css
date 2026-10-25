@@ -1542,3 +1542,71 @@
 .followUpButton { border-color: #e2e8e1; color: #435247; background: #fff; }
 .followUpButton:hover:not(:disabled) { border-color: #cbdcc9; color: #314c35; background: #f3f8f1; }
 
+/* Nature-led landing page */
+.authPage { min-height: 100svh; padding: 0 clamp(22px, 6.5vw, 104px); overflow: hidden; background: #fff; }
+.landingNav { height: 76px; border-color: #edf0eb; }
+.landingBrand { color: #29322b; }
+.landingBrandMark { color: #416649; }
+.navSignIn { padding: 10px 15px; border-color: #e4e9e2; border-radius: 999px; color: #39483b; background: #fff; font-size: 12px; }
+.navSignIn:hover { border-color: #cbd9c9; color: #314c35; background: #f4f8f2; }
+.landingHero { position: relative; width: 100%; max-width: 1280px; min-height: min(680px, calc(100svh - 130px)); grid-template-columns: .78fr 1.22fr; gap: clamp(34px, 6vw, 88px); padding: 52px 0 68px; }
+.heroCopy { position: relative; z-index: 2; max-width: 470px; padding-left: clamp(0px, 2vw, 28px); }
+.eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 25px; color: #6e806f; font-size: 10px; letter-spacing: 1.15px; }
+.heroEyebrowDot { width: 7px; height: 7px; border-radius: 50%; background: #769679; box-shadow: 0 0 0 4px #edf4ec; }
+.heroCopy h1 { color: #28382c; font-size: clamp(48px, 5.5vw, 74px); font-weight: 480; letter-spacing: -4.6px; line-height: .99; }
+.heroCopy h1 span { color: #77937a; font-family: Georgia, "Times New Roman", serif; font-size: 1.02em; font-style: italic; font-weight: 400; letter-spacing: -4px; }
+.authDescription { max-width: 420px; margin: 24px 0 0; color: #707971; font-size: 14px; line-height: 1.8; }
+.authError { margin: 16px 0 0; color: #a04b42; font-size: 12px; }
+.heroLandscape { position: relative; min-height: 480px; align-self: center; overflow: visible; border-radius: 28px; background: #eaf1e7; isolation: isolate; }
+.landscapeSky { position: absolute; inset: 0; overflow: hidden; border-radius: 28px; background: linear-gradient(158deg, #e6eee3 0%, #f0f1df 53%, #dce7d8 100%); }
+.landscapeSun { position: absolute; top: 11%; right: 18%; width: 90px; height: 90px; border-radius: 50%; background: #f8f3da; box-shadow: 0 0 60px 20px #fbf5dc70; }
+.landscapeHillBack { position: absolute; z-index: 1; right: -10%; bottom: 8%; left: -8%; height: 67%; border-radius: 48% 52% 0 0 / 38% 50% 0 0; background: linear-gradient(150deg, #91ad8d, #759777 62%, #5f8369); transform: rotate(-5deg); }
+.landscapeHillFront { position: absolute; z-index: 2; right: -10%; bottom: -8%; left: -11%; height: 53%; border-radius: 50% 47% 0 0 / 29% 37% 0 0; background: linear-gradient(155deg, #62886b 4%, #426f57 58%, #315d49 100%); transform: rotate(5deg); }
+.landscapeRiver { position: absolute; z-index: 3; right: 19%; bottom: -26%; width: 39%; height: 83%; border: 24px solid #cfdfcf; border-top: 0; border-radius: 0 0 52% 48%; transform: rotate(34deg); opacity: .92; }
+.landscapeCopy { position: absolute; z-index: 4; top: 13%; left: 11%; display: flex; flex-direction: column; gap: 14px; color: #526b55; }
+.landscapeCopy > span { font-size: 9px; font-weight: 650; letter-spacing: 1.5px; }
+.landscapeCopy strong { color: #36553e; font-family: Georgia, "Times New Roman", serif; font-size: clamp(26px, 3vw, 39px); font-weight: 400; letter-spacing: -1.2px; line-height: 1.05; }
+.landscapeCopy small { color: #617664; font-size: 11px; }
+.heroSearchCard { position: absolute; z-index: 5; right: -3%; bottom: 8%; width: min(510px, 92%); padding: 10px 12px 9px 17px; border: 1px solid #fff; border-radius: 17px; background: rgba(255,255,255,.94); box-shadow: 0 18px 50px #26472d25, 0 2px 8px #26472d0a; backdrop-filter: blur(18px); }
+.heroInputRow { display: flex; min-height: 47px; align-items: center; gap: 12px; color: #718175; }
+.heroInputRow input { min-width: 0; flex: 1; border: 0; outline: 0; color: #334238; background: transparent; font-size: 13px; }
+.heroInputRow input::placeholder { color: #8d968e; }
+.heroInputRow > button { display: grid; width: 36px; height: 36px; place-items: center; border: 0; border-radius: 11px; color: #fff; background: #456c50; cursor: pointer; transition: transform .16s ease, background .16s ease; }
+.heroInputRow > button:hover { transform: translateY(-1px); background: #34583e; }
+.heroInputMeta { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 9px; border-top: 1px solid #edf0eb; }
+.heroInputMeta span, .heroInputMeta button { display: inline-flex; align-items: center; gap: 6px; color: #828b82; font-size: 9px; }
+.heroInputMeta span svg { color: #66856c; }
+.heroInputMeta button { border: 0; color: #486c50; background: transparent; font-weight: 600; cursor: pointer; }
+.heroInputMeta button:hover { color: #2f5238; }
+.landingFooter { width: 100%; min-height: 58px; border-color: #edf0eb; color: #929992; font-size: 10px; }
+.landingFooter span:first-child { color: #49644d; font-size: 12px; font-weight: 650; letter-spacing: -.3px; }
+.landingFooter span:nth-child(2) { text-align: center; }
+
+@media (max-width: 820px) {
+  .landingHero { min-height: auto; grid-template-columns: 1fr; gap: 35px; padding: 58px 0 52px; }
+  .heroCopy { max-width: 650px; padding-left: 0; }
+  .heroLandscape { width: 100%; min-height: min(500px, 70vw); }
+  .heroSearchCard { right: 4%; }
+}
+@media (max-width: 560px) {
+  .authPage { padding: 0 20px; }
+  .landingNav { height: 68px; }
+  .landingHero { gap: 27px; padding: 49px 0 42px; }
+  .heroCopy h1 { font-size: clamp(47px, 13vw, 62px); letter-spacing: -3.5px; }
+  .heroCopy h1 span { letter-spacing: -3px; }
+  .authDescription { margin-top: 17px; font-size: 13px; }
+  .heroLandscape { min-height: 380px; border-radius: 22px; }
+  .landscapeSky { border-radius: 22px; }
+  .landscapeCopy { top: 11%; left: 8%; }
+  .landscapeSun { width: 64px; height: 64px; }
+  .heroSearchCard { right: 3%; bottom: 6%; width: 94%; padding: 8px 9px 8px 13px; border-radius: 14px; }
+  .heroInputRow input { font-size: 12px; }
+  .heroInputMeta span, .heroInputMeta button { font-size: 8px; }
+  .landingFooter { min-height: 52px; gap: 10px; font-size: 8px; }
+  .landingFooter span:nth-child(2) { max-width: 210px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .authPage *, .appShell *, .loadingPage * { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
