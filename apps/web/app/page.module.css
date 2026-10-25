@@ -1835,3 +1835,29 @@
   .heroTopline .navSignIn { min-height: 36px; }
 }
 
+/* Keep the account controls fixed while long conversations scroll. */
+.appShell { height: 100svh; min-height: 0; overflow: hidden; }
+.appShell .sidebar { height: 100svh; min-height: 0; overflow: hidden; }
+.appShell .sidebarSection { min-height: 0; overflow: hidden; }
+.appShell .conversationList { min-height: 0; max-height: none; flex: 1; overflow-y: auto; }
+.appShell .sidebarBottom { flex: 0 0 auto; margin-top: auto; }
+.appShell .mainPanel { height: 100%; min-height: 0; overflow: hidden; }
+.appShell .contentArea { min-height: 0; }
+
+/* Use neutral black for primary actions instead of the green accent. */
+.appShell .newChatButton { border-color: #161616; color: #fff; background: #161616; }
+.appShell .newChatButton > svg { color: #fff; }
+.appShell .newChatButton:hover { border-color: #303030; color: #fff; background: #303030; }
+.appShell .newChatButton:hover > svg { color: #fff; }
+.appShell .sendButton { border-color: #111; color: #fff; background: #111; }
+.appShell .sendButton:hover:not(:disabled) { border-color: #303030; color: #fff; background: #303030; }
+.appShell .sendButton:disabled { border-color: #e3e5e3; color: #fff; background: #b7bbb8; }
+.heroInputRow > button { color: #fff; background: #111; }
+.heroInputRow > button:hover { background: #303030; }
+.heroInputMeta button { color: #222; }
+.heroInputMeta button:hover { color: #000; }
+.appShell[data-theme="dark"] .newChatButton { border-color: #111; color: #fff; background: #171819; }
+.appShell[data-theme="dark"] .newChatButton:hover { border-color: #050505; background: #050505; }
+.appShell[data-theme="dark"] .sendButton { border-color: #111; color: #fff; background: #111; }
+.appShell[data-theme="dark"] .sendButton:hover:not(:disabled) { border-color: #050505; color: #fff; background: #050505; }
+.appShell[data-theme="dark"] .sendButton:disabled { border-color: #55595a; color: #999; background: #424546; }
