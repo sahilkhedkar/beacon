@@ -1472,3 +1472,73 @@
   .sidebar { flex-basis: 248px; width: 248px; }
   .welcome h1 { font-size: 36px; }
 }
+
+/* White, native-feeling surfaces across the workspace */
+.appShell, .mainPanel, .contentArea, .loadingPage { background: #fff; color: #232723; }
+.sidebar { border-color: #eceeeb; background: #fbfcfa; }
+.brand, .breadcrumb strong, .userDetails strong, .assistantIdentity, .answerBody h1, .answerBody h2, .answerBody h3 { color: #222823; }
+.brandMarkSmall, .assistantMark { color: #426b51; background: #edf4ee; border-color: #dfe9df; }
+.iconButton { color: #7b817c; }
+.iconButton:hover, .userButton:hover, .userMenu button:hover { border-color: #e7ebe6; color: #26372c; background: #f2f6f1; }
+.newChatButton { border-color: #e1e7e0; color: #2d4735; background: #f1f6f0; }
+.newChatButton:hover { border-color: #c9d8c9; color: #263b2c; background: #e8f0e7; }
+.newChatButton > svg, .suggestionIcon, .kickerLine { color: #456b4f; }
+.sidebarSearch { color: #7d847e; }
+.sidebarSearch:focus-within { border-color: #dce5dc; background: #fff; }
+.sidebarSearch input { color: #2b302c; }
+.sidebarSearch input::placeholder, .sectionLabel, .sidebarEmpty, .helpLink, .userDetails small { color: #858b85; }
+.searchShortcut { color: #989d98; }
+.conversationItem { color: #646c65; }
+.sidebar .conversationItem, .sidebar .conversationActive { color: #626b63; }
+.sidebar .conversationItem:hover, .sidebar .conversationItem:focus-visible, .sidebar .conversationActive, .sidebar .conversationActive:hover { color: #304c36; background: #edf3ec; }
+.userMenuWrap, .topbar { border-color: #eceeeb; }
+.topbar { background: rgba(255,255,255,.88); }
+.breadcrumb, .topbarRight { color: #808680; }
+.breadcrumbDivider { color: #c3c7c2; }
+.onlineDot, .statusDot { background: #5c9167; box-shadow: 0 0 9px #5c916733; }
+.welcome h1 { color: #252b26; }
+.welcome h1 span, .welcome > p { color: #777f78; }
+.welcomeKicker { color: #657b67; }
+.kickerLine { background: #78947b; }
+.suggestions button, .sourceCard { border-color: #e8ebe7; background: #fff; }
+.suggestions button:hover, .sourceCard:hover { border-color: #d5e1d5; background: #f8fbf7; }
+.suggestions strong, .sourceCard strong { color: #303832; }
+.suggestions small, .sourceExcerpt { color: #7c847d; }
+.suggestionIcon { border-color: #e2ebe1; background: #f1f6ef; }
+.suggestions button > svg, .sourceExternal { color: #818a81; }
+.userBubble { border-color: #e7ebe6; color: #29302b; background: #f3f6f2; }
+.answerBody { color: #444c45; }
+.answerBody a { color: #335c40; text-decoration-color: #335c4080; }
+.answerBody code { border-color: #e6ebe5; color: #375b3e; background: #f5f8f3; }
+.answerBody pre { border-color: #e7ebe6; background: #f8faf7; }
+.answerBody blockquote { border-color: #99b49a; color: #667067; }
+.answerLabel { border-color: #e7eae6; color: #818781; }
+.thinking { color: #777f78; }
+.thinking i, .streamCursor { background: #64856a; }
+.sourcesBlock { border-color: #e8ebe7; }
+.sourcesHeading, .sourcesHeading > span:first-child { color: #68716a; }
+.sourcesHeading svg { color: #64856a; }
+.sourceDomain { color: #66836a; }
+.sourceGrid { gap: 9px; }
+.composerArea { background: linear-gradient(180deg, transparent 0, #fff 20%); }
+.composer { border-color: #e1e6e0; background: #fff; box-shadow: 0 10px 36px #263b2c0b; }
+.composer:focus-within { border-color: #afc3ae; box-shadow: 0 0 0 3px #6d936512, 0 10px 36px #263b2c0b; }
+.composer textarea { color: #29302b; }
+.composer textarea::placeholder, .composerHint, .enterHint, .disclaimer { color: #858c86; }
+.composerHint svg { color: #65856a; }
+.sendButton { border-color: #456b4f; color: #fff; background: #456b4f; }
+.sendButton:hover:not(:disabled) { border-color: #34583e; color: #fff; background: #34583e; }
+.sendButton:disabled { border-color: #e5e9e4; color: #a3aaa3; background: #eff2ee; }
+.streamStatus { border-color: #e2e8e1; color: #5d685f; background: #fff; box-shadow: 0 6px 22px #263b2c12; }
+.loadingPage { background: #fff; }
+.loaderMark { color: #456b4f; background: #edf4ee; }
+.mobileScrim { background: #1e2b2060; }
+.sidebar { box-shadow: 18px 0 60px #1e2b2012; }
+.avatar { border-color: #dce8dc; color: #486b4d; background: #edf4ec; }
+.userMenu { border-color: #e2e8e1; background: #fff; box-shadow: 0 12px 28px #263b2c15; }
+.userMenu button { color: #515b52; }
+.userMenu button:hover { color: #314c35; background: #f2f6f1; }
+.followUpsLabel { color: #566258; }
+.followUpButton { border-color: #e2e8e1; color: #435247; background: #fff; }
+.followUpButton:hover:not(:disabled) { border-color: #cbdcc9; color: #314c35; background: #f3f8f1; }
+
